@@ -5,7 +5,7 @@ module.exports = {
 
   get: function (options, callback) {
     if (!options.endpoint || !options.apiKey) {
-      callback('options.endpoint and options.apiKey are both required');
+      return callback('options.endpoint and options.apiKey are both required');
     }
 
     options.endpoint = options.endpoint[0] === '/' ? options.endpoint.slice(1) : options.endpoint;
@@ -23,6 +23,10 @@ module.exports = {
           body = JSON.parse(body);
         } catch (e) {
           return callback('Response was not valid json. The Url was probably invalid. URL: ' + url);
+        }
+
+        if(!body.entries) {
+          return callback(null, [body]);
         }
 
         allEntries = allEntries.concat(body.entries);
