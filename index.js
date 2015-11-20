@@ -25,7 +25,11 @@ module.exports = {
           return callback('Response was not valid json. The Url was probably invalid. URL: ' + url);
         }
 
-        if(!body.entries) {
+        if (body.error) {
+          return callback(body.error);
+        }
+
+        if (!body.entries) {
           return callback(null, [body]);
         }
 
