@@ -25,6 +25,9 @@ module.exports = {
         try {
           body = JSON.parse(body);
         } catch (e) {
+          if(options.debug) {
+            console.log('pipelinedeals response: ', body);
+          }
           return callback('Response was not valid json. The Url was probably invalid. URL: ' + url);
         }
 
