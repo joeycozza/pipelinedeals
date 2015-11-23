@@ -14,6 +14,9 @@ module.exports = {
     function makeCall(page) {
 
       var url = BASE_URL + options.endpoint + '?api_key=' + options.apiKey + '&page=' + page + '&per_page=200';
+      if(options.debug) {
+        console.log('pipelinedeals url: ', url);
+      }
 
       request({url: url}, function (err, response, body) {
         if (err) {
