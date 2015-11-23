@@ -14,7 +14,7 @@ module.exports = {
     function makeCall(page) {
 
       var url = BASE_URL + options.endpoint + '?api_key=' + options.apiKey + '&page=' + page + '&per_page=200';
-      if(options.debug) {
+      if (options.debug) {
         console.log('pipelinedeals url: ', url);
       }
 
@@ -25,7 +25,7 @@ module.exports = {
         try {
           body = JSON.parse(body);
         } catch (e) {
-          if(options.debug) {
+          if (options.debug) {
             console.log('pipelinedeals response: ', body);
           }
           return callback('Response was not valid json. The Url was probably invalid. URL: ' + url);
@@ -42,7 +42,9 @@ module.exports = {
         allEntries = allEntries.concat(body.entries);
 
         if (body.pagination.page < body.pagination.pages) {
-          makeCall(++page);
+          setTimeout(function () {
+            makeCall(++page);
+          }, options.paginationDelay || 0);
         } else {
           callback(null, allEntries);
         }
